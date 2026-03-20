@@ -9,6 +9,22 @@
       Title="Main">
 
     <Grid>
-        
+        <Grid Margin="20" Background="#FFF0F0F0">
+            <ScrollViewer Margin="0,0,0,50">
+                <StackPanel x:Name="Parent"/>
+            </ScrollViewer>
+            <Button
+                x:Name="BthAdd"
+                Click="AddUser"
+                Height="25"
+                Content="Добавить"
+                VerticalAlignment="Bottom"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Width="100"
+                Background= "#FF46FD00"
+                BorderBrush="#FF46FD00"
+                Foreground="White"/>
+        </Grid>
     </Grid>
 </Page>

@@ -1,0 +1,49 @@
+﻿<Page x:Class="praktika26_Shein.Pages.Users.Add"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:praktika26_Shein.Pages.Users"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Add">
+
+    <Grid Margin="10" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100px"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Width="80" Height="80" VerticalAlignment="Top" Margin="10" Source="/Images/user.jpg" />
+
+        <Button x:Name="BtnAdd" Click="AddUser" Height="25" Content="Добавить" VerticalAlignment="Top" Margin="10,95,10,0"
+                Background="#FF46FD00" BorderBrush="#FF46FD00" Foreground="White"/>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label VerticalAlignment="Top" Margin="10,10,10,0" Content="Дата аренды: " />
+            <DatePicker x:Name="RentStart" VerticalAlignment="Top" Margin="10,35,10,0" Height="25"
+                VerticalContentAlignment="Center"/>
+
+            <Label VerticalAlignment="Top" Margin="10,65,10,0" Content="Время аренды: " />
+            <TextBox x:Name="RentTime" Text="Время аренды" VerticalAlignment="Top" Margin="10,90,10,0" Height="25"
+                VerticalContentAlignment="Center"/>
+
+            <Label VerticalAlignment="Top" Margin="10,10,10,0" Content="Продолжительность: " Grid.Column="1" />
+            <TextBox x:Name="Duration" Text="Продолжительность" VerticalAlignment="Top" Margin="10,35,10,0" Height="25"
+                Grid.Column="1" VerticalContentAlignment="Center"/>
+
+            <Label VerticalAlignment="Top" Margin="10,65,10,0" Grid.Column="1" Content="Клуб: " />
+            <ComboBox x:Name="Clubs" VerticalAlignment="Top" Grid.Column="1" Margin="10,90,10,0" Height="25"
+                VerticalContentAlignment="Center"/>
+
+            <Label VerticalAlignment="Top" Margin="10,120,10,0" Grid.ColumnSpan="2" Content="Фамилия Имя и Отчество" />
+            <TextBox x:Name="FIO" Text="Оценка Роберт Альбертович" VerticalAlignment="Top" Margin="10,145,10,0" Height="25"
+                VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+        </Grid>
+    </Grid>
+</Page>
