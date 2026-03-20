@@ -1,79 +1,64 @@
-﻿using praktika26_Shein.Classes;
-using praktika26_Shein.Models;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using praktika26_Shein.Classes;
 
 namespace praktika26_Shein.Pages.Users.Elements
 {
-    /// <summary>
-    /// Логика взаимодействия для Item.xaml
-    /// </summary>
     public partial class Item : UserControl
     {
-        /// <summary>
-        /// Контекст клубов
-        /// </summary>
         private ClubsContext AllClub = new ClubsContext();
-
-        /// <summary>
-        /// Страница Main
-        /// </summary>
         private Main Main;
-
-        /// <summary>
-        /// Данные о пользователе
-        /// </summary>
         private Models.Users User;
+
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(Item), new PropertyMetadata(false, OnIsReadOnlyChanged));
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Item;
+            if (control != null)
+            {
+                bool isReadOnly = (bool)e.NewValue;
+                control.BtnEdit.Visibility = isReadOnly ? Visibility.Collapsed : Visibility.Visible;
+                control.BtnDelete.Visibility = isReadOnly ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
         public Item(Models.Users User, Main Main)
         {
             InitializeComponent();
 
-            // Указываем фамилию в поле
             this.FIO.Text = User.FIO;
-
-            // Указываем дату аренды
             this.RentStart.Text = User.RentStart.ToString("yyyy-MM-dd");
-
-            // Указываем время аренды
             this.RentTime.Text = User.RentStart.ToString("HH:mm");
-
-            // Указываем продолжительность аренды
             this.Duration.Text = User.Duration.ToString();
 
-            // Получаем клуб по ID и указываем наименование
             var club = AllClub.Clubs.FirstOrDefault(x => x.Id == User.IdClub);
             this.Club.Text = club?.Name ?? "Клуб не найден";
 
-            // Запоминаем страницу Main
             this.Main = Main;
-
-            // Запоминаем пользователя
             this.User = User;
         }
 
-        /// <summary>
-        /// Метод изменения
-        /// </summary>
-        private void EditUser(object sender, System.Windows.RoutedEventArgs e)
+        private void EditUser(object sender, RoutedEventArgs e)
         {
-            // Открываем страницу добавления, передавая данные пользователя
+            if (UserSession.CurrentRole != "Admin") return;
             MainWindow.init.OpenPages(new Pages.Users.Add(this.Main, this.User));
         }
 
-        /// <summary>
-        /// Метод удаления
-        /// </summary>
-        private void DeleteUser(object sender, System.Windows.RoutedEventArgs e)
+        private void DeleteUser(object sender, RoutedEventArgs e)
         {
-            // Удаляем пользователя из контекста
+            if (UserSession.CurrentRole != "Admin") return;
             Main.AllUsers.Users.Remove(User);
-            // Сохраняем изменения
             Main.AllUsers.SaveChanges();
-
-            // Удаляем элемент со страницы Main
-            Main.UsersPanel.Children.Remove(this);
+            Main.LoadUsers(); // обновляем список
         }
     }
 }

@@ -10,21 +10,26 @@
 
     <Grid>
         <Grid Margin="20" Background="#FFF0F0F0">
-            <ScrollViewer Margin="0,0,0,50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" Height="30">
+                <TextBox x:Name="txtFilter" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" ToolTip="Поиск по названию или адресу"/>
+                <ComboBox x:Name="cmbSortBy" Width="120" Margin="0,0,10,0" VerticalContentAlignment="Center">
+                    <ComboBoxItem Content="Название" IsSelected="True"/>
+                    <ComboBoxItem Content="Адрес"/>
+                </ComboBox>
+                <Button Content="Применить" Click="ApplyFilterSort_Click" Background="#FF46FD00" Foreground="White" Padding="10,5"/>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" Margin="0,0,0,50">
                 <StackPanel x:Name="Parent"/>
             </ScrollViewer>
-            <Button
-                x:Name="BthAdd"
-                Click="AddClub"
-                Height="25"
-                Content="Добавить"
-                VerticalAlignment="Bottom"
-                Margin="10"
-                HorizontalAlignment="Right"
-                Width="100"
-                Background= "#FF46FD00"
-                BorderBrush="#FF46FD00"
-                Foreground="White"/>
+
+            <Button x:Name="BthAdd" Click="AddClub" Height="25" Content="Добавить" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Right" Width="100" Background="#FF46FD00" BorderBrush="#FF46FD00" Foreground="White"/>
         </Grid>
     </Grid>
 </Page>

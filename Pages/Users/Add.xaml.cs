@@ -23,7 +23,14 @@ namespace praktika26_Shein.Pages.Users
         public Add(Main Main, Models.Users User = null)
         {
             InitializeComponent();
+            if (UserSession.CurrentRole != "Admin")
+            {
+                MessageBox.Show("У вас нет прав на редактирование.");
+                MainWindow.init.OpenPages(new Pages.Users.Main());
+                return;
+            }
 
+            this.Main = Main;
             // Запоминаем страницу
             this.Main = Main;
 

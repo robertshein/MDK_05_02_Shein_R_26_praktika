@@ -1,69 +1,59 @@
-﻿using praktika26_Shein.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using praktika26_Shein.Classes;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace praktika26_Shein.Pages.Clubs.Elements
 {
-    /// <summary>
-    /// Логика взаимодействия для Item.xaml
-    /// </summary>
     public partial class Item : UserControl
     {
-        /// <summary>
-        /// Главная страница клубов
-        /// </summary>
         private Main Main;
-
-        /// <summary>
-        /// Данные клуба
-        /// </summary>
         private Models.Clubs Club;
+
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(Item), new PropertyMetadata(false, OnIsReadOnlyChanged));
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = d as Item;
+            if (control != null)
+            {
+                bool isReadOnly = (bool)e.NewValue;
+                control.BtnEdit.Visibility = isReadOnly ? Visibility.Collapsed : Visibility.Visible;
+                control.BtnDelete.Visibility = isReadOnly ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
         public Item(Models.Clubs Club, Main Main)
         {
             InitializeComponent();
 
-            // Присваиваем наименование
             this.Name.Text = Club.Name;
-            // Присваиваем адрес
             this.Address.Text = Club.Address;
-            // Присваиваем время работы
             this.WorkTime.Text = Club.WorkTime;
 
-            // Запоминаем в переменные
             this.Main = Main;
             this.Club = Club;
         }
 
-        private void EditClub(object sender, System.Windows.RoutedEventArgs e)
+        private void EditClub(object sender, RoutedEventArgs e)
         {
-            // Открываем страницу добавления, пересылая данные
+            if (UserSession.CurrentRole != "Admin") return;
             MainWindow.init.OpenPages(new Pages.Clubs.Add(this.Main, this.Club));
         }
 
-        /// <summary>
-        /// Метод удаления
-        /// </summary>
-        private void DeleteClub(object sender, System.Windows.RoutedEventArgs e)
+        private void DeleteClub(object sender, RoutedEventArgs e)
         {
-            // Удаляем клуб из контекста
+            if (UserSession.CurrentRole != "Admin") return;
             Main.AllClub.Clubs.Remove(Club);
-            // Сохраняем изменения
             Main.AllClub.SaveChanges();
-            // Удаляем элемент со страницы Main
-            (Main.Parent as Panel)?.Children.Remove(this);
+            // Обновляем список (перезагрузка с фильтром)
+            Main.LoadClubs();
         }
     }
 }

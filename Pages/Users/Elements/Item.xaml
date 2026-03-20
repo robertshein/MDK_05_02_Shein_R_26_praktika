@@ -13,10 +13,10 @@
 
         <Image Width="80" Height="80" VerticalAlignment="Top" Margin="10" Source="/Images/user.jpg" />
 
-        <Button Click="EditUser" Height="25" Content="Изменить" VerticalAlignment="Top" Margin="10,95,10,0"
+        <Button x:Name="BtnEdit" Click="EditUser" Height="25" Content="Изменить" VerticalAlignment="Top" Margin="10,95,10,0"
                 Background="#FF46FD00" BorderBrush="#FF46FD00" Foreground="White"/>
 
-        <Button Click="DeleteUser" Height="25" Content="Удалить" VerticalAlignment="Top" Margin="10,125,10,10"
+        <Button x:Name="BtnDelete" Click="DeleteUser" Height="25" Content="Удалить" VerticalAlignment="Top" Margin="10,125,10,10"
                 Background="#FFCD1E1E" BorderBrush="#FFCD1E1E" Foreground="White"/>
 
         <Grid Grid.Column="1">

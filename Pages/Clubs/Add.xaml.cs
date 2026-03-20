@@ -1,4 +1,5 @@
-﻿using praktika26_Shein.Models;
+﻿using praktika26_Shein.Classes;
+using praktika26_Shein.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,12 @@ namespace praktika26_Shein.Pages.Clubs
         public Add(Main Main, Models.Clubs Club = null)
         {
             InitializeComponent();
+            if (UserSession.CurrentRole != "Admin")
+            {
+                MessageBox.Show("У вас нет прав на редактирование.");
+                MainWindow.init.OpenPages(new Pages.Clubs.Main());
+                return;
+            }
 
             // Запоминаем в переменную
             this.Main = Main;

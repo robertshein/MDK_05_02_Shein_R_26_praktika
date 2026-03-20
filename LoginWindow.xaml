@@ -1,0 +1,26 @@
+﻿<Window x:Class="praktika26_Shein.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Вход" Height="149" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Логин:"/>
+        <TextBox x:Name="txtLogin" Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Пароль:"/>
+        <PasswordBox x:Name="txtPassword" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Войти" Click="Login_Click" Margin="5" Padding="5" Background="#FF46FD00" Foreground="White"/>
+        <Label x:Name="lblError" Grid.Row="3" Grid.ColumnSpan="2" Content="" Foreground="Red" HorizontalAlignment="Center"/>
+    </Grid>
+</Window>
